@@ -4,10 +4,10 @@ import java.io.*;
 import java.util.*;
 
 public class TrainData{
-    private Map<String, Integer> spamWordFreq;
-    private Map<String, Integer> hamWordFreq;
-    private Map<String, Double> spamProbMap;
-    private Map<String, Double> hamProbMap;
+    private Map<String, Integer> spamWordFreq; //Frequency map of how many times a word appears
+    private Map<String, Integer> hamWordFreq; //Frequency map of how many times a word appears
+    private Map<String, Double> spamProbMap; //Spam probabilities
+    private Map<String, Double> hamProbMap; //Ham probabilities
     private int amountOfSpam;
     private int amountOfHam;
 
@@ -29,7 +29,16 @@ public class TrainData{
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
     }
-
+    
+    /*
+    readFile
+    
+    @File file
+    @Map<String, Integer> map
+    
+    This method will take a file and a map and will read the given files recursively until a frequencyMap is
+    generated for how many times a word appears accross all the files
+    */
     public void readFile(File file, Map<String, Integer> map) throws IOException{
         System.out.println("Starting parsing the file:" + file.getAbsolutePath());
 
@@ -63,12 +72,20 @@ public class TrainData{
             }
         }
     }
-
+    
+    //Taken from Class Examples
     private boolean isValidWord(String word){
         String allLetters = "^[a-zA-Z]+$";
         return word.matches(allLetters);
     }
-
+    
+    /*
+    generateSpamProbabilityMap
+  
+    This method will calculate the probability map for spam
+    
+    @return Map<String, Double>
+    */
     public Map<String, Double> generateSpamProbabilityMap(){
         //Check if the spam and ham map have key, value pairs
         if(spamWordFreq != null) {
@@ -81,7 +98,14 @@ public class TrainData{
 
         return spamProbMap;
     }
-
+    
+    /*
+    generateHamProbabilityMap
+  
+    This method will calculate the probability map for ham
+    
+    @return Map<String, Double>
+    */
     public Map<String, Double> generateHamProbabilityMap(){
         if(hamWordFreq != null) {
             for (Map.Entry<String, Integer> entry : hamWordFreq.entrySet()) {
@@ -91,7 +115,15 @@ public class TrainData{
         }
             return hamProbMap;
     }
-
+    
+    /*
+    readDirectory
+    
+    @String path
+    
+    This method will take a String that represents the main path and will go into both the
+    spam and ham folders so each has its words counted and probabilities generated
+    */
     public void readDirectory(String path){
         File file = new File(path);                                                         //Given a path to either Test or Trial locate spam and ham
 
