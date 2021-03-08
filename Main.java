@@ -67,7 +67,8 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(vBox));
         primaryStage.show();
     }
-
+    
+    //This Method returns subdirectiors from the main directory
     public static String getDirectories(File dir, String key){
         if(dir.isDirectory()){
             File[] content = dir.listFiles();
